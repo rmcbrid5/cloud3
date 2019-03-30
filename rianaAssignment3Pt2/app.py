@@ -5,9 +5,8 @@ from flask import jsonify
 # pprint library is used to make the output look more pretty
 from pprint import pprint
 # connect to MongoDB, change the << MONGODB URL >> to reflect your own connection string
-myclient = MongoClient("mongodb://localhost:27017/")
+myclient = MongoClient("mongodb://10.0.0.12:27017/")
 mydb = myclient["cloudapp"]
-
 mycol = mydb["messages"]
 # Issue the serverStatus command and print the results
 
@@ -42,4 +41,4 @@ def retreive():
 
 
 if __name__ == '__main__':
-    app.run(port='50001')
+    app.run(host='0.0.0.0', port='50001')

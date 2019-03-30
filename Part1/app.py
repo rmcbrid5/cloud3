@@ -1,15 +1,10 @@
 from flask import Flask, render_template, flash, request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
-from pymongo import MongoClient
 import requests
 import json
 # pprint library is used to make the output look more pretty
 from pprint import pprint
 # connect to MongoDB, change the << MONGODB URL >> to reflect your own connection string
-myclient = MongoClient("mongodb://localhost:27017/")
-mydb = myclient["cloudapp"]
-
-mycol = mydb["messages"]
 # Issue the serverStatus command and print the results
 
 # App config.
@@ -31,7 +26,7 @@ def hello():
     print(form.errors)
     if request.method == 'POST':
         if request.form['submit_button'] == 'Retreive':
-            messages = requests.get('http://localhost:50001/retreive')
+            messages = requests.get('http://10.0.0.10:50001/retreive')
             messages = json.loads(messages.text)
             for key, value in messages.items():
                 flash('Message ' + str(key) + " : " + str(value))
@@ -44,7 +39,7 @@ def hello():
                 data = {'message': name }
 
                 # sending post request and saving response as response object
-                r = requests.post(url='http://localhost:50001/send', data=data)
+                r = requests.post(url='http://10.0.0.10:50001/send', data=data)
 
             else:
                 flash('All the form fields are required. ')
@@ -58,4 +53,4 @@ def hello():
     return render_template('hello.html', form=form)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
