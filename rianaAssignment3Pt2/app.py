@@ -5,7 +5,7 @@ from flask import jsonify
 # pprint library is used to make the output look more pretty
 from pprint import pprint
 # connect to MongoDB, change the << MONGODB URL >> to reflect your own connection string
-myclient = MongoClient("mongodb://10.0.0.12:27017/")
+myclient = MongoClient("mongodb://10.0.0.13:27017/")
 mydb = myclient["cloudapp"]
 mycol = mydb["messages"]
 # Issue the serverStatus command and print the results
