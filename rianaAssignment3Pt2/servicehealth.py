@@ -4,6 +4,7 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import time
 
 def sendit():
     port = 465  # For SSL
@@ -34,11 +35,12 @@ def sendit():
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
             server.login(sender_email, password)
             server.sendmail(sender_email, receiver_email, text)
-
-try:
-    a = requests.get('http://localhost:50001/retreive')
-    print(a.text)
-    if ("Error" or "error") in a.text:
+while True:
+    time.sleep(5)
+    try:
+        a = requests.get('http://localhost:50001/retreive')
+        print(a.text)
+        if ("Error" or "error") in a.text:
+            sendit()
+    except:
         sendit()
-except:
-    sendit()
